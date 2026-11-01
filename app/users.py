@@ -2,7 +2,8 @@ import uuid
 from typing import Optional
 from fastapi import Depends, Request
 from fastapi_users import BaseUserManager, FastAPIUsers, UUIDIDMixin, models
-
+import os
+import dotenv as load_dotenv
 from fastapi_users.authentication import(
     AuthenticationBackend,
     BearerTransport,
@@ -10,8 +11,8 @@ from fastapi_users.authentication import(
 )
 from fastapi_users.db import SQLAlchemyUserDatabase
 from app.db import User, get_user_db
-
-SECRET = "vMiwwqtibMU<"
+load_dotenv()
+SECRET = os.environ["SECRET"]
 
 class UserManager(UUIDIDMixin, BaseUserManager[User, uuid.UUID]):
     async def on_after_register(self, user, request = None):
